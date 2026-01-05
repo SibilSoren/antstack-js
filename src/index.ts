@@ -30,63 +30,79 @@ const banner = `
 
 cli
   .command('[root]', 'Initialize a new backend project')
-  .action(async (root) => {
+  .option('--framework <framework>', 'Select framework (express, hono, fastify)')
+  .option('--database <database>', 'Select database (postgresql, mongodb, mysql)')
+  .option('--orm <orm>', 'Select ORM (prisma, drizzle)')
+  .action(async (root, options) => {
     console.log(chalk.blue(banner));
     intro(`${chalk.bgBlue.white(' antstack-js ')} ${chalk.dim(`v${version}`)}`);
 
-    const projectName = await text({
-      message: 'What is your project name?',
-      placeholder: root || 'my-antstack-app',
-      initialValue: root,
-      validate(value) {
-        if (value.length === 0) return `Project name is required`;
-      },
-    });
+    let projectName = root || options.name;
 
-    if (isCancel(projectName)) {
-      cancel('Operation cancelled.');
-      process.exit(0);
+    if (!projectName) {
+      const name = await text({
+        message: 'What is your project name?',
+        placeholder: 'my-antstack-app',
+        validate(value) {
+          if (value.length === 0) return `Project name is required`;
+        },
+      });
+
+      if (isCancel(name)) {
+        cancel('Operation cancelled.');
+        process.exit(0);
+      }
+      projectName = name;
     }
 
-    const framework = (await select({
-      message: 'Select a framework',
-      options: [
-        { value: 'express', label: 'Express', hint: 'Classic, flexible' },
-        { value: 'hono', label: 'Hono', hint: 'Ultrafast, modern' },
-        { value: 'fastify', label: 'Fastify', hint: 'Performance-focused' },
-      ],
-    })) as string;
+    let framework = options.framework;
+    if (!framework) {
+      framework = (await select({
+        message: 'Select a framework',
+        options: [
+          { value: 'express', label: 'Express', hint: 'Classic, flexible' },
+          { value: 'hono', label: 'Hono', hint: 'Ultrafast, modern' },
+          { value: 'fastify', label: 'Fastify', hint: 'Performance-focused' },
+        ],
+      })) as string;
 
-    if (isCancel(framework)) {
-      cancel('Operation cancelled.');
-      process.exit(0);
+      if (isCancel(framework)) {
+        cancel('Operation cancelled.');
+        process.exit(0);
+      }
     }
 
-    const database = (await select({
-      message: 'Select a database',
-      options: [
-        { value: 'postgresql', label: 'PostgreSQL', hint: 'Relational' },
-        { value: 'mongodb', label: 'MongoDB', hint: 'NoSQL' },
-        { value: 'mysql', label: 'MySQL', hint: 'Relational' },
-      ],
-    })) as string;
+    let database = options.database;
+    if (!database) {
+      database = (await select({
+        message: 'Select a database',
+        options: [
+          { value: 'postgresql', label: 'PostgreSQL', hint: 'Relational' },
+          { value: 'mongodb', label: 'MongoDB', hint: 'NoSQL' },
+          { value: 'mysql', label: 'MySQL', hint: 'Relational' },
+        ],
+      })) as string;
 
-    if (isCancel(database)) {
-      cancel('Operation cancelled.');
-      process.exit(0);
+      if (isCancel(database)) {
+        cancel('Operation cancelled.');
+        process.exit(0);
+      }
     }
 
-    const orm = (await select({
-      message: 'Select an ORM',
-      options: [
-        { value: 'prisma', label: 'Prisma', hint: 'Typesafe, auto-generated client' },
-        { value: 'drizzle', label: 'Drizzle', hint: 'Lightweight, SQL-like' },
-      ],
-    })) as string;
+    let orm = options.orm;
+    if (!orm) {
+      orm = (await select({
+        message: 'Select an ORM',
+        options: [
+          { value: 'prisma', label: 'Prisma', hint: 'Typesafe, auto-generated client' },
+          { value: 'drizzle', label: 'Drizzle', hint: 'Lightweight, SQL-like' },
+        ],
+      })) as string;
 
-    if (isCancel(orm)) {
-      cancel('Operation cancelled.');
-      process.exit(0);
+      if (isCancel(orm)) {
+        cancel('Operation cancelled.');
+        process.exit(0);
+      }
     }
 
     const s = spinner();
