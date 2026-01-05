@@ -70,133 +70,136 @@ ${chalk.cyan('Files created:')}
   src/controllers/${kebabName}.controller.ts
   src/services/${kebabName}.service.ts
   src/repositories/${kebabName}.repository.ts
-  src/routes/${kebabName}.routes.ts
-
-${chalk.dim('Next steps:')}
-1. Register the route in your main router
-2. Add model to your ${config.orm === 'prisma' ? 'Prisma schema' : 'Drizzle schema'}
-3. Run migrations
-`));
-  } catch (error) {
-    s.stop('Generation failed.');
-    console.error(chalk.red(error));
-    process.exit(1);
-  }
-}
-
-async function generateRoute(projectDir: string, name: string, config: ProjectConfig) {
-  const srcDir = join(projectDir, 'src');
-  const Name = capitalize(name);
-  const kebabName = toKebabCase(name);
-
-  // Create directories
-  const dirs = ['controllers', 'services', 'repositories', 'routes'];
-  for (const dir of dirs) {
-    mkdirSync(join(srcDir, dir), { recursive: true });
-  }
-
-  // Generate files based on framework
-  switch (config.framework) {
-    case 'express':
-      generateExpressRoute(srcDir, name, Name, kebabName);
-      break;
-    case 'hono':
-      generateHonoRoute(srcDir, name, Name, kebabName);
-      break;
-    case 'fastify':
-      generateFastifyRoute(srcDir, name, Name, kebabName);
-      break;
-  }
-
-  // Generate shared files (service, repository)
-  generateService(srcDir, name, Name, kebabName);
-  generateRepository(srcDir, name, Name, kebabName, config.orm);
-}
-
-function generateExpressRoute(srcDir: string, name: string, Name: string, kebabName: string) {
-  // Controller
-  const controllerContent = `import { Request, Response, NextFunction } from 'express';
-import { ${Name}Service } from '../services/${kebabName}.service.js';
-
-export class ${Name}Controller {
-  constructor(private ${name}Service: ${Name}Service) {}
-
-  async getAll(req: Request, res: Response, next: NextFunction) {
-    try {
-      const items = await this.${name}Service.findAll();
-      res.json(items);
+    src/controllers/${kebabName}.controller.ts
+    src/services/${kebabName}.service.ts
+    src/repositories/${kebabName}.repository.ts
+    src/api/routes/${kebabName}.routes.ts
+  
+  ${chalk.dim('Next steps:')}
+  1. Register the route in your main router (src/api/router.ts)
+  2. Add model to your ${config.orm === 'prisma' ? 'Prisma schema' : 'Drizzle schema'}
+  3. Run migrations
+  `));
     } catch (error) {
-      next(error);
+      s.stop('Generation failed.');
+      console.error(chalk.red(error));
+      process.exit(1);
     }
   }
-
-  async getById(req: Request, res: Response, next: NextFunction) {
-    try {
-      const item = await this.${name}Service.findById(req.params.id);
-      if (!item) {
-        return res.status(404).json({ message: '${Name} not found' });
+  
+  async function generateRoute(projectDir: string, name: string, config: ProjectConfig) {
+    const srcDir = join(projectDir, 'src');
+    const Name = capitalize(name);
+    const kebabName = toKebabCase(name);
+  
+    // Create directories
+    const dirs = ['controllers', 'services', 'repositories', 'api/routes'];
+    for (const dir of dirs) {
+      mkdirSync(join(srcDir, dir), { recursive: true });
+    }
+  
+    // Generate files based on framework
+    switch (config.framework) {
+      case 'express':
+        generateExpressRoute(srcDir, name, Name, kebabName);
+        break;
+      case 'hono':
+        generateHonoRoute(srcDir, name, Name, kebabName);
+        break;
+      case 'fastify':
+        generateFastifyRoute(srcDir, name, Name, kebabName);
+        break;
+    }
+  
+    // Generate shared files (service, repository)
+    generateService(srcDir, name, Name, kebabName);
+    generateRepository(srcDir, name, Name, kebabName, config.orm);
+  }
+  
+  function generateExpressRoute(srcDir: string, name: string, Name: string, kebabName: string) {
+    // Controller
+    const controllerContent = `import { Request, Response, NextFunction } from 'express';
+  import { ${Name}Service } from '../services/${kebabName}.service.js';
+  
+  export class ${Name}Controller {
+    constructor(private ${name}Service: ${Name}Service) {}
+  
+    async getAll(req: Request, res: Response, next: NextFunction) {
+      try {
+        const items = await this.${name}Service.findAll();
+        res.json(items);
+      } catch (error) {
+        next(error);
       }
-      res.json(item);
-    } catch (error) {
-      next(error);
+    }
+  
+    async getById(req: Request, res: Response, next: NextFunction) {
+      try {
+        const item = await this.${name}Service.findById(req.params.id);
+        if (!item) {
+          return res.status(404).json({ message: '${Name} not found' });
+        }
+        res.json(item);
+      } catch (error) {
+        next(error);
+      }
+    }
+  
+    async create(req: Request, res: Response, next: NextFunction) {
+      try {
+        const item = await this.${name}Service.create(req.body);
+        res.status(201).json(item);
+      } catch (error) {
+        next(error);
+      }
+    }
+  
+    async update(req: Request, res: Response, next: NextFunction) {
+      try {
+        const item = await this.${name}Service.update(req.params.id, req.body);
+        res.json(item);
+      } catch (error) {
+        next(error);
+      }
+    }
+  
+    async delete(req: Request, res: Response, next: NextFunction) {
+      try {
+        await this.${name}Service.delete(req.params.id);
+        res.status(204).send();
+      } catch (error) {
+        next(error);
+      }
     }
   }
-
-  async create(req: Request, res: Response, next: NextFunction) {
-    try {
-      const item = await this.${name}Service.create(req.body);
-      res.status(201).json(item);
-    } catch (error) {
-      next(error);
-    }
+  `;
+  
+    // Routes
+    const routesContent = `import { Router } from 'express';
+  import { ${Name}Controller } from '../../controllers/${kebabName}.controller.js';
+  import { ${Name}Service } from '../../services/${kebabName}.service.js';
+  import { ${Name}Repository } from '../../repositories/${kebabName}.repository.js';
+  import { db } from '../../db/index.js';
+  
+  const router = Router();
+  
+  // Dependency Injection
+  const ${name}Repository = new ${Name}Repository(db);
+  const ${name}Service = new ${Name}Service(${name}Repository);
+  const ${name}Controller = new ${Name}Controller(${name}Service);
+  
+  router.get('/', (req, res, next) => ${name}Controller.getAll(req, res, next));
+  router.get('/:id', (req, res, next) => ${name}Controller.getById(req, res, next));
+  router.post('/', (req, res, next) => ${name}Controller.create(req, res, next));
+  router.put('/:id', (req, res, next) => ${name}Controller.update(req, res, next));
+  router.delete('/:id', (req, res, next) => ${name}Controller.delete(req, res, next));
+  
+  export default router;
+  `;
+  
+    writeFileSync(join(srcDir, 'controllers', `${kebabName}.controller.ts`), controllerContent);
+    writeFileSync(join(srcDir, 'api/routes', `${kebabName}.routes.ts`), routesContent);
   }
-
-  async update(req: Request, res: Response, next: NextFunction) {
-    try {
-      const item = await this.${name}Service.update(req.params.id, req.body);
-      res.json(item);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async delete(req: Request, res: Response, next: NextFunction) {
-    try {
-      await this.${name}Service.delete(req.params.id);
-      res.status(204).send();
-    } catch (error) {
-      next(error);
-    }
-  }
-}
-`;
-
-  // Routes
-  const routesContent = `import { Router } from 'express';
-import { ${Name}Controller } from '../controllers/${kebabName}.controller.js';
-import { ${Name}Service } from '../services/${kebabName}.service.js';
-import { ${Name}Repository } from '../repositories/${kebabName}.repository.js';
-import { db } from '../db/index.js';
-
-const router = Router();
-
-// Dependency Injection
-const ${name}Repository = new ${Name}Repository(db);
-const ${name}Service = new ${Name}Service(${name}Repository);
-const ${name}Controller = new ${Name}Controller(${name}Service);
-
-router.get('/', (req, res, next) => ${name}Controller.getAll(req, res, next));
-router.get('/:id', (req, res, next) => ${name}Controller.getById(req, res, next));
-router.post('/', (req, res, next) => ${name}Controller.create(req, res, next));
-router.put('/:id', (req, res, next) => ${name}Controller.update(req, res, next));
-router.delete('/:id', (req, res, next) => ${name}Controller.delete(req, res, next));
-
-export default router;
-`;
-
-  writeFileSync(join(srcDir, 'controllers', `${kebabName}.controller.ts`), controllerContent);
-  writeFileSync(join(srcDir, 'routes', `${kebabName}.routes.ts`), routesContent);
-}
 
 function generateHonoRoute(srcDir: string, name: string, Name: string, kebabName: string) {
   // Controller
@@ -243,10 +246,10 @@ export class ${Name}Controller {
 
   // Routes
   const routesContent = `import { Hono } from 'hono';
-import { ${Name}Controller } from '../controllers/${kebabName}.controller.js';
-import { ${Name}Service } from '../services/${kebabName}.service.js';
-import { ${Name}Repository } from '../repositories/${kebabName}.repository.js';
-import { db } from '../db/index.js';
+import { ${Name}Controller } from '../../controllers/${kebabName}.controller.js';
+import { ${Name}Service } from '../../services/${kebabName}.service.js';
+import { ${Name}Repository } from '../../repositories/${kebabName}.repository.js';
+import { db } from '../../db/index.js';
 
 const ${name}Routes = new Hono();
 
@@ -265,7 +268,7 @@ export default ${name}Routes;
 `;
 
   writeFileSync(join(srcDir, 'controllers', `${kebabName}.controller.ts`), controllerContent);
-  writeFileSync(join(srcDir, 'routes', `${kebabName}.routes.ts`), routesContent);
+  writeFileSync(join(srcDir, 'api/routes', `${kebabName}.routes.ts`), routesContent);
 }
 
 function generateFastifyRoute(srcDir: string, name: string, Name: string, kebabName: string) {
@@ -308,10 +311,10 @@ export class ${Name}Controller {
 
   // Routes
   const routesContent = `import { FastifyInstance } from 'fastify';
-import { ${Name}Controller } from '../controllers/${kebabName}.controller.js';
-import { ${Name}Service } from '../services/${kebabName}.service.js';
-import { ${Name}Repository } from '../repositories/${kebabName}.repository.js';
-import { db } from '../db/index.js';
+import { ${Name}Controller } from '../../controllers/${kebabName}.controller.js';
+import { ${Name}Service } from '../../services/${kebabName}.service.js';
+import { ${Name}Repository } from '../../repositories/${kebabName}.repository.js';
+import { db } from '../../db/index.js';
 
 export default async function ${name}Routes(fastify: FastifyInstance) {
   // Dependency Injection
@@ -328,7 +331,7 @@ export default async function ${name}Routes(fastify: FastifyInstance) {
 `;
 
   writeFileSync(join(srcDir, 'controllers', `${kebabName}.controller.ts`), controllerContent);
-  writeFileSync(join(srcDir, 'routes', `${kebabName}.routes.ts`), routesContent);
+  writeFileSync(join(srcDir, 'api/routes', `${kebabName}.routes.ts`), routesContent);
 }
 
 function generateService(srcDir: string, name: string, Name: string, kebabName: string) {
