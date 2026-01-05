@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Navbar from '../components/Navbar'
 
 const FRAMEWORKS = [
   { id: 'express', name: 'Express', color: 'bg-green-500/10 text-green-400 border-green-500/20' },
@@ -27,7 +28,8 @@ export default function BuilderPage() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white py-20 selection:bg-blue-500/30">
-      <div className="container mx-auto px-6 max-w-4xl">
+      <Navbar />
+      <div className="container mx-auto px-6 max-w-4xl pt-12">
         <header className="mb-16 text-center">
           <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tight uppercase">
             Build your <span className="text-blue-500">Perfect Stack</span>

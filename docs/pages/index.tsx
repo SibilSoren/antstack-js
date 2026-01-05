@@ -1,9 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
+import Navbar from '../components/Navbar'
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-blue-500/30">
+      <Navbar />
       {/* Hero Section */}
       <section className="relative pt-24 pb-32 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-blue-500/10 to-transparent pointer-events-none" />

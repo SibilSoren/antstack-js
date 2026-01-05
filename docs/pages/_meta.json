@@ -4,12 +4,13 @@
     "type": "page",
     "display": "hidden"
   },
-  "builder": {
-    "title": "Builder",
-    "type": "page"
-  },
   "docs": {
     "title": "Docs",
-    "type": "menu"
+    "type": "page"
+  },
+  "builder": {
+    "title": "Builder",
+    "type": "page",
+    "href": "/builder"
   }
 }
