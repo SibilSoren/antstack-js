@@ -1,0 +1,49 @@
+{
+  "name": "antstack-js",
+  "version": "0.1.0",
+  "description": "A production-ready backend boilerplate generator inspired by ShadCN.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "antstack": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "dev": "tsup src/index.ts --watch --format esm",
+    "build": "tsup src/index.ts --format esm --clean --minify",
+    "start": "node dist/index.js",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write src/**/*.ts"
+  },
+  "keywords": [
+    "cli",
+    "backend",
+    "scaffolding",
+    "boilerplate",
+    "express",
+    "hono",
+    "fastify",
+    "prisma",
+    "drizzle"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@clack/prompts": "^0.7.0",
+    "cac": "^6.7.14",
+    "chalk": "^5.3.0",
+    "execa": "^8.0.1",
+    "fs-extra": "^11.2.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.11.0",
+    "tsup": "^8.0.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
