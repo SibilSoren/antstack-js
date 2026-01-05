@@ -5,6 +5,9 @@ import { intro, outro, text, select, isCancel, cancel } from '@clack/prompts';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { scaffoldProject } from './utils/scaffold.js';
+import path from 'node:path';
+import { spinner } from '@clack/prompts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = join(__filename, '..');
@@ -86,11 +89,30 @@ cli
       process.exit(0);
     }
 
-    outro(
-      chalk.green(
-        `Project ${projectName} is ready to be scaffolded with ${framework}, ${database}, and ${orm}!`
-      )
-    );
+    const s = spinner();
+    s.start('Scaffolding your project...');
+
+    const targetDir = path.resolve(process.cwd(), projectName);
+    
+    try {
+      await scaffoldProject(targetDir, {
+        projectName,
+        framework,
+        database,
+        orm,
+      });
+      s.stop(`Project ${projectName} scaffolded successfully!`);
+      
+      outro(
+        chalk.green(
+          `Done! Your new backend is ready at ${chalk.cyan(targetDir)}`
+        )
+      );
+    } catch (error) {
+      s.stop('Scaffolding failed.');
+      console.error(chalk.red(error));
+      process.exit(1);
+    }
   });
 
 cli.version(version);
