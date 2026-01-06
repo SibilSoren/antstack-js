@@ -38,13 +38,13 @@ function detectProjectConfig(projectDir: string): ProjectConfig | null {
 }
 
 export async function handleAddCommand(module: string, projectDir: string) {
-  intro(`${chalk.bgBlue.white(' antstack add ')} ${chalk.cyan(module)}`);
+  intro(`${chalk.bgHex('#B45309').white(' kodkod add ')} ${chalk.cyan(module)}`);
 
   const config = detectProjectConfig(projectDir);
   
   if (!config) {
     console.error(chalk.red('Error: Could not detect project configuration.'));
-    console.error(chalk.yellow('Make sure you are running this command from an antstack-js project root.'));
+    console.error(chalk.yellow('Make sure you are running this command from a kodkod project root.'));
     process.exit(1);
   }
 

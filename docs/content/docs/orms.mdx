@@ -1,11 +1,11 @@
 ---
 title: ORMs
-description: Learn about Prisma, Drizzle, and Mongoose support in antstack-js.
+description: Learn about Prisma, Drizzle, and Mongoose support in kodkod.
 ---
 
 # ORMs
 
-antstack-js supports three modern ORMs: **Prisma**, **Drizzle**, and **Mongoose**. The available options depend on your database choice:
+kodkod supports three modern ORMs: **Prisma**, **Drizzle**, and **Mongoose**. The available options depend on your database choice:
 
 - **PostgreSQL/MySQL**: Prisma or Drizzle
 - **MongoDB**: Mongoose or Prisma
@@ -20,7 +20,7 @@ antstack-js supports three modern ORMs: **Prisma**, **Drizzle**, and **Mongoose*
 - Projects needing Prisma Studio for database visualization
 
 ```bash
-npx antstack-js@latest my-app --orm prisma
+npx kodkod@latest my-app --orm prisma
 ```
 
 ### Schema Example
@@ -69,7 +69,7 @@ const found = await db.user.findUnique({ where: { id: user.id } });
 - Lightweight deployments
 
 ```bash
-npx antstack-js@latest my-app --orm drizzle
+npx kodkod@latest my-app --orm drizzle
 ```
 
 ### Schema Example
@@ -120,7 +120,7 @@ const user = await db.select().from(users).where(eq(users.id, '1'));
 - Projects needing schema validation and middleware
 
 ```bash
-npx antstack-js@latest my-app --database mongodb --orm mongoose
+npx kodkod@latest my-app --database mongodb --orm mongoose
 ```
 
 ### Schema Example

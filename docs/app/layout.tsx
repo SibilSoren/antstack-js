@@ -7,13 +7,13 @@ const inter = Inter({
   subsets: ['latin'],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://antstack-js.vercel.app';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://kodkod.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'antstack-js | Roll Your Own Backend Stack',
-    template: '%s | antstack-js',
+    default: 'kodkod | Small CLI. Big backends.',
+    template: '%s | kodkod',
   },
   description: 'Production-ready backend boilerplate generator. Choose Express, Hono, or Fastify with Prisma, Drizzle, or Mongoose. Own every line of code.',
   keywords: [
@@ -28,28 +28,29 @@ export const metadata: Metadata = {
     'TypeScript backend',
     'API generator',
     'CLI tool',
+    'kodkod',
   ],
-  authors: [{ name: 'antstack-js' }],
-  creator: 'antstack-js',
+  authors: [{ name: 'kodkod' }],
+  creator: 'kodkod',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: siteUrl,
-    siteName: 'antstack-js',
-    title: 'antstack-js | Roll Your Own Backend Stack',
+    siteName: 'kodkod',
+    title: 'kodkod | Small CLI. Big backends.',
     description: 'Production-ready backend boilerplate generator. Choose your framework, ORM, and database. Own every line of code.',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'antstack-js - Roll Your Own Backend Stack',
+        alt: 'kodkod - Small CLI. Big backends.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'antstack-js | Roll Your Own Backend Stack',
+    title: 'kodkod | Small CLI. Big backends.',
     description: 'Production-ready backend boilerplate generator. Choose your framework, ORM, and database.',
     images: ['/og-image.png'],
   },

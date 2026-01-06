@@ -37,7 +37,7 @@ function toKebabCase(str: string): string {
 }
 
 export async function handleGenerateCommand(type: string, name: string, projectDir: string) {
-  intro(`${chalk.bgBlue.white(' antstack generate ')} ${chalk.cyan(type)} ${chalk.yellow(name)}`);
+  intro(`${chalk.bgHex('#B45309').white(' kodkod generate ')} ${chalk.cyan(type)} ${chalk.yellow(name)}`);
 
   if (type !== 'route') {
     console.error(chalk.red(`Unknown generator type: ${type}`));
@@ -49,7 +49,7 @@ export async function handleGenerateCommand(type: string, name: string, projectD
   
   if (!config) {
     console.error(chalk.red('Error: Could not detect project configuration.'));
-    console.error(chalk.yellow('Make sure you are running this command from an antstack-js project root.'));
+    console.error(chalk.yellow('Make sure you are running this command from a kodkod project root.'));
     process.exit(1);
   }
 

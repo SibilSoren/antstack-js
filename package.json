@@ -1,11 +1,11 @@
 {
-  "name": "antstack-js",
-  "version": "1.0.1",
-  "description": "A production-ready backend boilerplate generator inspired by ShadCN.",
+  "name": "kodkod-stack",
+  "version": "1.0.0",
+  "description": "Small CLI. Big backends. Production-ready backend boilerplate generator.",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {
-    "antstack": "./dist/index.js"
+    "kodkod": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SibilSoren/antstack-js.git"
+    "url": "https://github.com/SibilSoren/kodkod-stack.git"
   },
   "publishConfig": {
     "access": "public"

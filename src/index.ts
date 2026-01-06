@@ -17,18 +17,18 @@ const packageJson = JSON.parse(
 );
 const { version } = packageJson;
 
-const cli = cac('antstack');
+const cli = cac('kodkod');
 
 const banner = `
-${chalk.green(`
- █████╗ ███╗   ██╗████████╗███████╗████████╗ █████╗  ██████╗██╗  ██╗
-██╔══██╗████╗  ██║╚══██╔══╝██╔════╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝
-███████║██╔██╗ ██║   ██║   ███████╗   ██║   ███████║██║     █████╔╝ 
-██╔══██║██║╚██╗██║   ██║   ╚════██║   ██║   ██╔══██║██║     ██╔═██╗ 
-██║  ██║██║ ╚████║   ██║   ███████║   ██║   ██║  ██║╚██████╗██║  ██╗
-╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝`)}
-${chalk.dim('─────────────────────────────────────────────────────────────────────')}
-${chalk.cyan('         Roll Your Own Backend Stack • Own Every Line of Code')}
+${chalk.hex('#B45309')(`
+██╗  ██╗ ██████╗ ██████╗ ██╗  ██╗ ██████╗ ██████╗ 
+██║ ██╔╝██╔═══██╗██╔══██╗██║ ██╔╝██╔═══██╗██╔══██╗
+█████╔╝ ██║   ██║██║  ██║█████╔╝ ██║   ██║██║  ██║
+██╔═██╗ ██║   ██║██║  ██║██╔═██╗ ██║   ██║██║  ██║
+██║  ██╗╚██████╔╝██████╔╝██║  ██╗╚██████╔╝██████╔╝
+╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═════╝`)}
+${chalk.dim('──────────────────────────────────────────────────')}
+${chalk.hex('#D97706')('              Small CLI. Big backends.')}
 `;
 
 cli
@@ -40,14 +40,14 @@ cli
   .option('--package-manager <pm>', 'Select package manager (npm, pnpm, yarn, bun)')
   .action(async (root, options) => {
     console.log(chalk.blue(banner));
-    intro(`${chalk.bgBlue.white(' antstack-js ')} ${chalk.dim(`v${version}`)}`);
+    intro(`${chalk.bgHex('#B45309').white(' kodkod ')} ${chalk.dim(`v${version}`)}`);
 
     let projectName = root || options.name;
 
     if (!projectName) {
       const name = await text({
         message: 'What is your project name?',
-        placeholder: 'my-antstack-app',
+        placeholder: 'my-kodkod-app',
         validate(value) {
           if (value.length === 0) return `Project name is required`;
         },

@@ -5,8 +5,8 @@ export function baseOptions(): BaseLayoutProps {
     nav: {
       title: (
         <div className="flex items-center gap-2 font-mono">
-          <img src="/logo.png" alt="antstack-js" className="w-7 h-7 rounded" />
-          <span className="font-bold text-green-700 dark:text-green-400 tracking-tight">antstack-js</span>
+          <img src="/logo.png" alt="kodkod" className="w-7 h-7 rounded" />
+          <span className="font-bold text-amber-700 dark:text-amber-400 tracking-tight">kodkod</span>
         </div>
       ),
     },
@@ -22,7 +22,7 @@ export function baseOptions(): BaseLayoutProps {
       },
       {
         type: 'icon',
-        url: 'https://github.com/SibilSoren/antstack-js',
+        url: 'https://github.com/SibilSoren/kodkod',
         text: 'GitHub',
         icon: (
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

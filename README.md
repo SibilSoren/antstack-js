@@ -1,10 +1,10 @@
-# antstack-js
+# kodkod
 
 <p align="center">
-  <img src="docs/public/logo.png" alt="antstack-js logo" width="120" height="120" />
+  <img src="docs/public/logo.png" alt="kodkod logo" width="120" height="120" />
 </p>
 
-<h3 align="center">Roll Your Own Backend Stack</h3>
+<h3 align="center">Small CLI. Big backends.</h3>
 
 <p align="center">
   Production-ready backend boilerplate generator.<br/>
@@ -12,9 +12,9 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/antstack-js"><img src="https://img.shields.io/npm/v/antstack-js.svg" alt="npm version" /></a>
-  <a href="https://github.com/SibilSoren/antstack-js/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license" /></a>
-  <a href="https://github.com/SibilSoren/antstack-js"><img src="https://img.shields.io/github/stars/SibilSoren/antstack-js?style=social" alt="GitHub stars" /></a>
+  <a href="https://www.npmjs.com/package/kodkod-stack"><img src="https://img.shields.io/npm/v/kodkod-stack.svg" alt="npm version" /></a>
+  <a href="https://github.com/SibilSoren/kodkod-stack/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license" /></a>
+  <a href="https://github.com/SibilSoren/kodkod-stack"><img src="https://img.shields.io/github/stars/SibilSoren/kodkod-stack?style=social" alt="GitHub stars" /></a>
 </p>
 
 ---
@@ -42,13 +42,13 @@ Generate a complete backend project in seconds with an interactive wizard or CLI
 ### 🔐 Auth Module
 Add JWT-based authentication with a single command:
 ```bash
-npx antstack-js add auth
+npx kodkod-stack add auth
 ```
 
 ### 📦 Route Generator
 Generate complete CRUD routes with controller, service, and repository:
 ```bash
-npx antstack-js generate route products
+npx kodkod-stack generate route products
 ```
 
 ### 🏗️ Clean Architecture
@@ -63,10 +63,10 @@ npx antstack-js generate route products
 
 ```bash
 # Interactive wizard
-npx antstack-js@latest my-api
+npx kodkod@latest my-api
 
 # Or with flags
-npx antstack-js@latest my-api --framework express --database postgresql --orm prisma
+npx kodkod-stack@latest my-api --framework express --database postgresql --orm prisma
 ```
 
 ---
@@ -75,7 +75,7 @@ npx antstack-js@latest my-api --framework express --database postgresql --orm pr
 
 ### 1. Create a new project
 ```bash
-npx antstack-js@latest my-api
+npx kodkod@latest my-api
 ```
 
 ### 2. Install dependencies
@@ -110,11 +110,11 @@ npm run dev
 
 | Command | Description |
 |---------|-------------|
-| `npx antstack-js [name]` | Create new project (interactive) |
-| `npx antstack-js [name] --framework <f> --database <d> --orm <o>` | Create with flags |
-| `npx antstack-js add auth` | Add JWT authentication |
-| `npx antstack-js generate route <name>` | Generate CRUD route |
-| `npx antstack-js g route <name>` | Short alias for generate |
+| `npx kodkod-stack [name]` | Create new project (interactive) |
+| `npx kodkod-stack [name] --framework <f> --database <d> --orm <o>` | Create with flags |
+| `npx kodkod-stack add auth` | Add JWT authentication |
+| `npx kodkod-stack generate route <name>` | Generate CRUD route |
+| `npx kodkod-stack g route <name>` | Short alias for generate |
 
 ### Flags
 
@@ -149,13 +149,13 @@ my-api/
 
 ## 🌐 Web Builder
 
-Use our [Visual Builder](https://antstack-js.vercel.app/builder) to configure your stack and generate the CLI command!
+Use our [Visual Builder](https://kodkod-stack.vercel.app/builder) to configure your stack and generate the CLI command!
 
 ---
 
 ## 📚 Documentation
 
-Visit [antstack-js.vercel.app/docs](https://antstack-js.vercel.app/docs) for full documentation.
+Visit [kodkod-stack.vercel.app/docs](https://kodkod-stack.vercel.app/docs) for full documentation.
 
 ---
 
@@ -167,7 +167,7 @@ Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
 
 ## 📄 License
 
-MIT © [antstack-js](LICENSE)
+MIT © [kodkod](LICENSE)
 
 ---
 

@@ -2,14 +2,14 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
-/* Terminal-inspired theme - Light mode */
+/* Kodkod theme - Warm amber/brown - Light mode */
 :root {
-  --fd-primary: 22 163 74; /* green-600 */
+  --fd-primary: 180 83 9; /* amber-700 */
 }
 
-/* Terminal-inspired theme - Dark mode */
+/* Kodkod theme - Warm amber/brown - Dark mode */
 .dark {
-  --fd-primary: 74 222 128; /* green-400 */
+  --fd-primary: 251 191 36; /* amber-400 */
 }
 
 /* Monospace font for terminal aesthetic */
@@ -46,9 +46,9 @@ pre {
 .prose :not(pre) > code {
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
-  background-color: rgb(22 163 74 / 0.1);
+  background-color: rgb(180 83 9 / 0.1);
 }
 
 .dark .prose :not(pre) > code {
-  background-color: rgb(74 222 128 / 0.1);
+  background-color: rgb(251 191 36 / 0.1);
 }
