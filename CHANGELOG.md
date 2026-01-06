@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/SibilSoren/kodkod-stack/compare/v1.1.0...v1.1.1) (2026-01-06)
+
+
+### Bug Fixes
+
+* **docs:** import missing Tab/Tabs in swagger.mdx ([e00387c](https://github.com/SibilSoren/kodkod-stack/commit/e00387cc246793be19ee0b3ad11bc960f86192ae))
+
 # [1.1.0](https://github.com/SibilSoren/kodkod-stack/compare/v1.0.6...v1.1.0) (2026-01-06)
 
 
