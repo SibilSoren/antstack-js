@@ -1,6 +1,9 @@
 import { User, IUser } from '../models/user.model.js';
+import type { Mongoose } from 'mongoose';
 
 export class UserRepository {
+  // db parameter accepted for API consistency with Prisma/Drizzle
+  constructor(private db?: Mongoose) {}
   async findAll(): Promise<IUser[]> {
     return User.find();
   }

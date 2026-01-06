@@ -13,3 +13,4 @@ export async function connectDB() {
 }
 
 export { mongoose };
+export { mongoose as db };
