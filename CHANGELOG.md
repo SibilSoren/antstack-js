@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/SibilSoren/kodkod-stack/compare/v1.0.6...v1.1.0) (2026-01-06)
+
+
+### Features
+
+* add Swagger/OpenAPI module support ([01af451](https://github.com/SibilSoren/kodkod-stack/commit/01af451d0396912e5ac687368569f933ae36adc2))
+
 ## [1.0.6](https://github.com/SibilSoren/kodkod-stack/compare/v1.0.5...v1.0.6) (2026-01-06)
 
 
