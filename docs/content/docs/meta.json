@@ -6,6 +6,7 @@
     "frameworks",
     "orms",
     "architecture",
-    "auth"
+    "auth",
+    "swagger"
   ]
 }

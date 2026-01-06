@@ -1,0 +1,87 @@
+---
+title: Swagger/OpenAPI
+description: Learn how to add API documentation to your Kodkod project.
+---
+
+# Swagger/OpenAPI
+
+Kodkod provides a built-in module to add Swagger/OpenAPI documentation to your backend. This allows you to visualize and interact with your API's resources without having any implementation logic in place.
+
+## Adding Swagger
+
+To add Swagger to your project, run the following command in your terminal:
+
+```bash
+npx kodkod-stack@latest add swagger
+```
+
+This command will:
+1. Detect your framework (Express, Hono, or Fastify).
+2. Install the necessary dependencies.
+3. Generate a configuration file in `src/config/`.
+
+## Framework Integration
+
+After running the command, you need to add a few lines of code to your main entry point (`src/index.ts`) to enable the documentation.
+
+<Tabs items={['Express', 'Hono', 'Fastify']}>
+  <Tab value="Express">
+    Kodkod uses `swagger-ui-express` and `swagger-jsdoc`.
+
+    ```typescript
+    import swaggerUi from 'swagger-ui-express';
+    import { swaggerSpec } from './config/swagger.config.js';
+
+    // ... after initializing app
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    ```
+
+    You can add documentation to your routes using JSDoc comments:
+
+    ```typescript
+    /**
+     * @openapi
+     * /health:
+     *   get:
+     *     description: Returns server status
+     *     responses:
+     *       200:
+     *         description: OK
+     */
+    ```
+  </Tab>
+  <Tab value="Hono">
+    Kodkod uses `@hono/swagger-ui`.
+
+    ```typescript
+    import { setupSwagger } from './config/swagger.js';
+
+    // ... after initializing app
+    setupSwagger(app);
+    ```
+
+    The UI will be available at `/docs` and the OpenAPI spec at `/api/openapi.json`.
+  </Tab>
+  <Tab value="Fastify">
+    Kodkod uses `@fastify/swagger` and `@fastify/swagger-ui`.
+
+    ```typescript
+    import { setupSwagger } from './config/swagger.js';
+
+    // ... after initializing fastify
+    await setupSwagger(fastify);
+    ```
+
+    The UI will be available at `/docs`.
+  </Tab>
+</Tabs>
+
+## Viewing Documentation
+
+Once integrated, start your development server:
+
+```bash
+npm run dev
+```
+
+Visit `http://localhost:3000/docs` (or your configured port) to view the interactive API documentation.
