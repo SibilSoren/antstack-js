@@ -17,16 +17,41 @@ const DATABASES = [
 const ORMS = [
   { id: 'prisma', name: 'prisma', desc: 'typesafe, auto-generated' },
   { id: 'drizzle', name: 'drizzle', desc: 'lightweight, sql-like' },
+  { id: 'mongoose', name: 'mongoose', desc: 'mongodb-native odm' },
+];
+
+const RUNTIMES = [
+  { id: 'node', name: 'node', desc: 'standard runtime' },
+  { id: 'bun', name: 'bun', desc: 'fast all-in-one' },
+];
+
+const PACKAGE_MANAGERS = [
+  { id: 'npm', name: 'npm', desc: 'default manager' },
+  { id: 'pnpm', name: 'pnpm', desc: 'fast, disk efficient' },
+  { id: 'yarn', name: 'yarn', desc: 'classic alternative' },
+  { id: 'bun', name: 'bun', desc: 'native bun manager' },
 ];
 
 export default function BuilderPage() {
   const [framework, setFramework] = useState('express');
   const [database, setDatabase] = useState('postgresql');
   const [orm, setOrm] = useState('prisma');
+  const [runtime, setRuntime] = useState('node');
+  const [packageManager, setPackageManager] = useState('npm');
   const [projectName, setProjectName] = useState('my-kodkod-app');
   const [copied, setCopied] = useState(false);
 
-  const command = `npx kodkod-stack@latest ${projectName} --framework ${framework} --database ${database} --orm ${orm}`;
+  // Filter incompatible combinations
+  React.useEffect(() => {
+    if (database === 'mongodb' && orm === 'drizzle') {
+      setOrm('prisma');
+    }
+    if (database !== 'mongodb' && orm === 'mongoose') {
+      setOrm('prisma');
+    }
+  }, [database, orm]);
+
+  const command = `npx kodkod-stack@latest ${projectName} --framework ${framework} --database ${database} --orm ${orm} --runtime ${runtime} --package-manager ${packageManager}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(command);
@@ -134,19 +159,71 @@ export default function BuilderPage() {
                     <span className="text-orange-600 dark:text-orange-400">#</span> orm
                   </label>
                   <div className="space-y-2">
-                    {ORMS.map((o) => (
+                    {ORMS.map((o) => {
+                      const isDisabled = (database === 'mongodb' && o.id === 'drizzle') || (database !== 'mongodb' && o.id === 'mongoose');
+                      return (
+                        <button
+                          key={o.id}
+                          disabled={isDisabled}
+                          onClick={() => setOrm(o.id)}
+                          className={`w-full px-4 py-2 rounded border text-left transition-all text-sm ${
+                            orm === o.id 
+                              ? 'bg-amber-500/10 border-amber-500/50 dark:border-amber-500/40 text-amber-700 dark:text-amber-300' 
+                              : isDisabled
+                                ? 'bg-gray-100 dark:bg-[#080808] border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed opacity-50'
+                                : 'bg-gray-50 dark:bg-[#0d0d0d] border-amber-500/20 dark:border-amber-500/10 text-amber-600/60 dark:text-amber-500/60 hover:border-amber-500/40 dark:hover:border-amber-500/30'
+                          }`}
+                        >
+                          <span className={`${isDisabled ? 'text-gray-300 dark:text-gray-700' : 'text-amber-600 dark:text-amber-400'} mr-2 truncate`}>{orm === o.id ? '●' : '○'}</span>
+                          <span className="font-bold">{o.name}</span>
+                          <span className="text-amber-600/40 dark:text-amber-500/40 ml-2">// {o.desc}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Runtime */}
+                <div>
+                  <label className="block text-amber-600/60 dark:text-amber-500/60 text-sm mb-3">
+                    <span className="text-orange-600 dark:text-orange-400">#</span> runtime
+                  </label>
+                  <div className="flex gap-4">
+                    {RUNTIMES.map((r) => (
                       <button
-                        key={o.id}
-                        onClick={() => setOrm(o.id)}
-                        className={`w-full px-4 py-2 rounded border text-left transition-all text-sm ${
-                          orm === o.id 
+                        key={r.id}
+                        onClick={() => setRuntime(r.id)}
+                        className={`flex-1 px-4 py-2 rounded border text-left transition-all text-sm ${
+                          runtime === r.id 
                             ? 'bg-amber-500/10 border-amber-500/50 dark:border-amber-500/40 text-amber-700 dark:text-amber-300' 
                             : 'bg-gray-50 dark:bg-[#0d0d0d] border-amber-500/20 dark:border-amber-500/10 text-amber-600/60 dark:text-amber-500/60 hover:border-amber-500/40 dark:hover:border-amber-500/30'
                         }`}
                       >
-                        <span className="text-amber-600 dark:text-amber-400 mr-2">{orm === o.id ? '●' : '○'}</span>
-                        <span className="font-bold">{o.name}</span>
-                        <span className="text-amber-600/40 dark:text-amber-500/40 ml-2">// {o.desc}</span>
+                        <span className="text-amber-600 dark:text-amber-400 mr-2">{runtime === r.id ? '●' : '○'}</span>
+                        <span className="font-bold">{r.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Package Manager */}
+                <div>
+                  <label className="block text-amber-600/60 dark:text-amber-500/60 text-sm mb-3">
+                    <span className="text-orange-600 dark:text-orange-400">#</span> package_manager
+                  </label>
+                  <div className="grid grid-cols-2 gap-4">
+                    {PACKAGE_MANAGERS.map((pm) => (
+                      <button
+                        key={pm.id}
+                        onClick={() => setPackageManager(pm.id)}
+                        className={`px-4 py-2 rounded border text-left transition-all text-sm ${
+                          packageManager === pm.id 
+                            ? 'bg-amber-500/10 border-amber-500/50 dark:border-amber-500/40 text-amber-700 dark:text-amber-300' 
+                            : 'bg-gray-50 dark:bg-[#0d0d0d] border-amber-500/20 dark:border-amber-500/10 text-amber-600/60 dark:text-amber-500/60 hover:border-amber-500/40 dark:hover:border-amber-500/30'
+                        }`}
+                      >
+                        <span className="text-amber-600 dark:text-amber-400 mr-2">{packageManager === pm.id ? '●' : '○'}</span>
+                        <span className="font-bold">{pm.name}</span>
                       </button>
                     ))}
                   </div>
@@ -179,7 +256,9 @@ export default function BuilderPage() {
                       <span className="text-amber-600 dark:text-amber-400">$</span> npx kodkod-stack@latest {projectName} \<br />
                       <span className="text-amber-600/60 dark:text-amber-500/60 ml-4">--framework</span> <span className="text-orange-600 dark:text-orange-400">{framework}</span> \<br />
                       <span className="text-amber-600/60 dark:text-amber-500/60 ml-4">--database</span> <span className="text-orange-600 dark:text-orange-400">{database}</span> \<br />
-                      <span className="text-amber-600/60 dark:text-amber-500/60 ml-4">--orm</span> <span className="text-orange-600 dark:text-orange-400">{orm}</span>
+                      <span className="text-amber-600/60 dark:text-amber-500/60 ml-4">--orm</span> <span className="text-orange-600 dark:text-orange-400">{orm}</span> \<br />
+                      <span className="text-amber-600/60 dark:text-amber-500/60 ml-4">--runtime</span> <span className="text-orange-600 dark:text-orange-400">{runtime}</span> \<br />
+                      <span className="text-amber-600/60 dark:text-amber-500/60 ml-4">--package-manager</span> <span className="text-orange-600 dark:text-orange-400">{packageManager}</span>
                     </code>
                   </div>
 

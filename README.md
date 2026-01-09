@@ -19,39 +19,45 @@
 
 ---
 
-## ✨ Features
+## Features
 
-### 🚀 Quick Scaffolding
+### Quick Scaffolding
 Generate a complete backend project in seconds with an interactive wizard or CLI flags.
 
-### 🔧 Multiple Frameworks
+### Multiple Frameworks
 - **Express** - Classic, flexible, battle-tested
 - **Hono** - Ultrafast, modern, edge-ready
 - **Fastify** - Performance-focused with built-in validation
 
-### 🗄️ Multiple ORMs
+### Multiple ORMs
 - **Prisma** - Type-safe, auto-generated client
 - **Drizzle** - Lightweight, SQL-like
 - **Mongoose** - MongoDB-native ODM
 
-### 💾 Multiple Databases
+### Multiple Databases
 - **PostgreSQL** - Robust relational database
 - **MySQL** - Popular relational database
 - **MongoDB** - Flexible document database
 
-### 🔐 Auth Module
+### Auth Module
 Add JWT-based authentication with a single command:
 ```bash
 npx kodkod-stack add auth
 ```
 
-### 📦 Route Generator
+### Route Generator
 Generate complete CRUD routes with controller, service, and repository:
 ```bash
 npx kodkod-stack generate route products
 ```
 
-### 🏗️ Clean Architecture
+### Testing Module
+Add Vitest-based integration testing support:
+```bash
+npx kodkod-stack add test
+```
+
+### Clean Architecture
 - Service-Controller-Repository pattern
 - Manual dependency injection
 - TypeScript-first with strict mode
@@ -59,7 +65,17 @@ npx kodkod-stack generate route products
 
 ---
 
-## 📦 Installation
+## Testing and Stability
+
+The CLI undergoes rigorous automated testing to ensure the stability of generated projects.
+
+- **Comprehensive Test Suite**: Every combination of framework, database, and ORM is automatically verified.
+- **Deep Verification**: Our CI pipeline automatically installs dependencies, builds the generated code, and runs integration tests for all framework types.
+- **CI/CD Driven**: Every contribution is verified via GitHub Actions to maintain the highest quality standards.
+
+---
+
+## Installation
 
 ```bash
 # Interactive wizard
@@ -71,7 +87,7 @@ npx kodkod-stack@latest my-api --framework express --database postgresql --orm p
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Create a new project
 ```bash
@@ -106,15 +122,16 @@ npm run dev
 
 ---
 
-## 📖 Commands
+## Commands
 
 | Command | Description |
 |---------|-------------|
 | `npx kodkod-stack [name]` | Create new project (interactive) |
 | `npx kodkod-stack [name] --framework <f> --database <d> --orm <o>` | Create with flags |
 | `npx kodkod-stack add auth` | Add JWT authentication |
+| `npx kodkod-stack add test` | Add Vitest integration tests |
+| `npx kodkod-stack add swagger` | Add Swagger/OpenAPI documentation |
 | `npx kodkod-stack generate route <name>` | Generate CRUD route |
-| `npx kodkod-stack g route <name>` | Short alias for generate |
 
 ### Flags
 
@@ -126,7 +143,7 @@ npm run dev
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 my-api/
@@ -147,30 +164,30 @@ my-api/
 
 ---
 
-## 🌐 Web Builder
+## Web Builder
 
 Use our [Visual Builder](https://kodkodstack.vercel.app/builder) to configure your stack and generate the CLI command!
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 Visit [kodkodstack.vercel.app/docs](https://kodkodstack.vercel.app/docs) for full documentation.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ---
 
-## 📄 License
+## License
 
 MIT © [kodkod](LICENSE)
 
 ---
 
-## 💖 Support
+## Support
 
-If you find this project helpful, please consider giving it a ⭐ on GitHub!
+If you find this project helpful, please consider giving it a star on GitHub!
