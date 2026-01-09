@@ -22,7 +22,7 @@ export function baseOptions(): BaseLayoutProps {
       },
       {
         type: 'icon',
-        url: 'https://github.com/SibilSoren/kodkod',
+        url: 'https://github.com/SibilSoren/kodkod-stack',
         text: 'GitHub',
         icon: (
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

@@ -1,7 +1,7 @@
-# kodkod
+# kodkod-stack
 
 <p align="center">
-  <img src="docs/public/logo.png" alt="kodkod logo" width="120" height="120" />
+  <img src="docs/public/logo.png" alt="kodkod-stack logo" width="120" height="120" />
 </p>
 
 <h3 align="center">Small CLI. Big backends.</h3>
@@ -166,13 +166,13 @@ my-api/
 
 ## Web Builder
 
-Use our [Visual Builder](https://kodkodstack.vercel.app/builder) to configure your stack and generate the CLI command!
+Use our [Visual Builder](https://kodkod-stackstack.vercel.app/builder) to configure your stack and generate the CLI command!
 
 ---
 
 ## Documentation
 
-Visit [kodkodstack.vercel.app/docs](https://kodkodstack.vercel.app/docs) for full documentation.
+Visit [kodkod-stackstack.vercel.app/docs](https://kodkod-stackstack.vercel.app/docs) for full documentation.
 
 ---
 
@@ -184,7 +184,7 @@ Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
 
 ## License
 
-MIT © [kodkod](LICENSE)
+MIT © [kodkod-stack](LICENSE)
 
 ---
 
