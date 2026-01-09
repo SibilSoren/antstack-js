@@ -176,7 +176,7 @@ ${chalk.cyan('Files created:')}
     async getById(req: Request, res: Response, next: NextFunction) {
       try {
         const item = await this.${name}Service.findById(req.params.id);
-        if (!item) {
+        if (item === null || item === undefined) {
           return res.status(404).json({ message: '${Name} not found' });
         }
         res.json(item);
@@ -219,7 +219,7 @@ ${chalk.cyan('Files created:')}
   import { ${Name}Controller } from '../../controllers/${kebabName}.controller.js';
   import { ${Name}Service } from '../../services/${kebabName}.service.js';
   import { ${Name}Repository } from '../../repositories/${kebabName}.repository.js';
-  import { db } from '../../db/index.js';
+  import { db } from '../../config/db.js';
   
   const router = Router();
   
@@ -257,7 +257,7 @@ export class ${Name}Controller {
   async getById(c: Context) {
     const id = c.req.param('id');
     const item = await this.${name}Service.findById(id);
-    if (!item) {
+    if (item === null || item === undefined) {
       return c.json({ message: '${Name} not found' }, 404);
     }
     return c.json(item);
@@ -289,7 +289,7 @@ export class ${Name}Controller {
 import { ${Name}Controller } from '../../controllers/${kebabName}.controller.js';
 import { ${Name}Service } from '../../services/${kebabName}.service.js';
 import { ${Name}Repository } from '../../repositories/${kebabName}.repository.js';
-import { db } from '../../db/index.js';
+import { db } from '../../config/db.js';
 
 const ${name}Routes = new Hono();
 
@@ -326,9 +326,9 @@ export class ${Name}Controller {
 
   async getById(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
     const item = await this.${name}Service.findById(request.params.id);
-    if (!item) {
-      return reply.status(404).send({ message: '${Name} not found' });
-    }
+      if (item === null || item === undefined) {
+        return reply.status(404).send({ message: '${Name} not found' });
+      }
     return reply.send(item);
   }
 
@@ -354,7 +354,7 @@ export class ${Name}Controller {
 import { ${Name}Controller } from '../../controllers/${kebabName}.controller.js';
 import { ${Name}Service } from '../../services/${kebabName}.service.js';
 import { ${Name}Repository } from '../../repositories/${kebabName}.repository.js';
-import { db } from '../../db/index.js';
+import { db } from '../../config/db.js';
 
 export default async function ${name}Routes(fastify: FastifyInstance) {
   // Dependency Injection
@@ -448,11 +448,6 @@ export class ${Name}Repository {
 }
 
 async function generateTest(projectDir: string, name: string, config: ProjectConfig) {
-  // Read package.json to get test runner choice
-  const pkgPath = join(projectDir, 'package.json');
-  const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'));
-  const testRunner = pkg.kodkod?.testRunner || 'vitest';
-  
   const testsDir = join(projectDir, 'tests', 'integration');
   mkdirSync(testsDir, { recursive: true });
   
@@ -463,7 +458,7 @@ async function generateTest(projectDir: string, name: string, config: ProjectCon
   const templatePath = join(
     templatesDir,
     config.framework,
-    testRunner,
+    'vitest',
     'integration.template.ts'
   );
   

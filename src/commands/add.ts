@@ -133,9 +133,8 @@ ${chalk.cyan('Next steps:')}
 ✓ Testing module installed!
 
 ${chalk.cyan('Next steps:')}
-1. Run ${chalk.yellow('npm install')}
-2. Generate tests: ${chalk.yellow('npx kodkod generate test <route-name>')}
-3. Run tests: ${chalk.yellow('npm run test')}
+1. Generate tests: ${chalk.cyan('npx kodkod generate test <route-name>')}
+2. Run tests: ${chalk.cyan('npm run test')}
 `));
       } catch (error) {
         console.error(chalk.red(error));

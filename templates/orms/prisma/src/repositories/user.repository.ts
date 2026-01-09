@@ -8,7 +8,7 @@ export class UserRepository {
   }
 
   async findById(id: string) {
-    return this.db.user.findById(id);
+    return this.db.user.findUnique({ where: { id } });
   }
 
   async create(data: any) {

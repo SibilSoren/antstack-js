@@ -1,8 +1,8 @@
 import { vi, beforeAll, afterAll } from 'vitest';
 import Fastify, { FastifyInstance } from 'fastify';
 
-// Mock database before importing routes
-vi.mock('../src/db/index.js', () => ({
+// Mock database before importing any modules that might use it
+vi.mock('../src/config/db.js', () => ({
   db: {},
 }));
 
@@ -10,9 +10,15 @@ let app: FastifyInstance;
 
 beforeAll(async () => {
   app = Fastify();
-  // TODO: Register your routes here
-  // const routes = await import('../src/api/router.js');
-  // await app.register(routes.default);
+  
+  // Import and use the router
+  try {
+    const { router } = await import('../src/api/router.js');
+    await app.register(router, { prefix: '/api' });
+  } catch (error) {
+    console.error('Failed to load router:', error);
+  }
+  
   await app.ready();
 });
 
