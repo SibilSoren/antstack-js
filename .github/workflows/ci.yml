@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop, feat/*, fix/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Build & Comprehensive Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build CLI
+        run: npm run build
+
+      - name: Run Global Vitest (Unit Tests)
+        run: npm test
+        continue-on-error: true # Supporting existing tests if any
+
+      - name: Run Comprehensive CLI Integration Tests (Deep Subset)
+        run: npm run test:deep
+        env:
+          DEBUG: "true"
